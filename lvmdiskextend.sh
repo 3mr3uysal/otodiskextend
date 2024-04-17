@@ -116,13 +116,14 @@ selectedVG=$(echo ${vgs[$vg_option]} | cut -d ":" -f2)
 selectedVG=$(cut -d " " -f3 <<< "$selectedVG")
 
 ########################################## COMMANDS OUTPUT ##########################################
-echo "---Komut Listesi---"
-echo
-echo "------------------------------------------------------------------------------"
-echo "pvcreate $selectedDisk"
-echo "vgextend $selectedVG $selectedDisk"
-echo "lvm lvextend -l +100%FREE $selectedDevMapperName"
-echo "$resize_command $selectedDevMapperName"
-echo "------------------------------------------------------------------------------"
-echo "yukaridaki komutlari sirasiyla uygula"
-echo "------------------------------------------------------------------------------"
+echo "---Disk Genisletme Islemi Basladi---"
+pvcreate $selectedDisk
+sleep 2
+vgextend $selectedVG $selectedDisk
+sleep 2
+lvm lvextend -l +100%FREE $selectedDevMapperName
+sleep 2
+$resize_command $selectedDevMapperName
+sleep 2
+echo "--Disk Boyutunu Kontrol Et--"
+df -h
